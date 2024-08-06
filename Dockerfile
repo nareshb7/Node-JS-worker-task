@@ -2,7 +2,7 @@
 FROM node:14-alpine
 
 # Set the working directory
-WORKDIR /app
+WORKDIR /usr/src/app
 
 # Copy package.json and package-lock.json
 COPY package*.json ./
@@ -14,8 +14,8 @@ RUN npm install
 COPY . .
 
 # Expose port (optional, for debugging)
-EXPOSE 8080
+EXPOSE 3000
 
 # Command to run the application
-CMD ["npm", "start"]
+CMD ["ts-node-dev", "src/server.ts"]
 
