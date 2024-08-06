@@ -1,10 +1,21 @@
-FROM node:14
+# Use the official lightweight Node.js image
+FROM node:14-alpine
 
-WORKDIR /usr/src/app
+# Set the working directory
+WORKDIR /app
 
+# Copy package.json and package-lock.json
 COPY package*.json ./
+
+# Install dependencies
 RUN npm install
 
+# Copy the rest of the application code
 COPY . .
 
-CMD ["ts-node", "src/server.ts"]
+# Expose port (optional, for debugging)
+EXPOSE 8080
+
+# Command to run the application
+CMD ["npm", "start"]
+

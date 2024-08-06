@@ -9,7 +9,7 @@ const runChildTask = async (fileSize: number, s3Destination: string) => {
     console.log(`File ${fileName} uploaded:`, result);
 };
 
-const startWorker = async () => {
+export const startWorker = async () => {
     const channel = getChannel();
     channel.consume('tasks', async (msg) => {
         if (msg) {
