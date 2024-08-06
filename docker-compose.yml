@@ -1,0 +1,37 @@
+version: '3'
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+
+  parent:
+    build: .
+    command: ts-node-dev src/parentTask.ts
+    depends_on:
+      - rabbitmq
+
+  worker1:
+    build: .
+    command: ts-node-dev src/workerTask.ts
+    depends_on:
+      - rabbitmq
+
+  worker2:
+    build: .
+    command: ts-node-dev src/workerTask.ts
+    depends_on:
+      - rabbitmq
+
+  worker3:
+    build: .
+    command: ts-node-dev src/workerTask.ts
+    depends_on:
+      - rabbitmq
+
+  worker4:
+    build: .
+    command: ts-node-dev src/workerTask.ts
+    depends_on:
+      - rabbitmq
