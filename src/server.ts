@@ -2,7 +2,7 @@
 import dotenv from 'dotenv';
 import { connectRabbitMQ } from './rabbitMQ';
 import { createParentTask } from './parentTask';
-import { startWorker } from './childTask';
+import { startWorker } from './workerTask';
 
 // const app = express();
 // app.use(express.json());
