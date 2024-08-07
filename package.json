@@ -4,22 +4,25 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "nodemon src/taskProducer.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.624.0",
     "amqplib": "^0.10.4",
-    "aws-sdk": "^2.1668.0",
     "dotenv": "^16.4.5",
-    "express": "^4.19.2",
     "ts-node-dev": "^2.0.0",
-    "typescript": "^5.5.4"
+    "typescript": "^5.5.4",
+    "uuid": "^10.0.0"
   },
   "devDependencies": {
     "@types/amqplib": "^0.10.5",
+    "@types/aws-sdk": "^2.7.0",
     "@types/node": "^22.1.0",
-    "@types/uuid": "^10.0.0"
+    "@types/uuid": "^10.0.0",
+    "ts-node": "^10.9.2"
   }
 }
