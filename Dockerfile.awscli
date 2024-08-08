@@ -1,0 +1,14 @@
+# Use a lightweight base image
+FROM amazonlinux:2
+
+# Install AWS CLI v2
+RUN yum install -y unzip \
+    && curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" \
+    && unzip awscliv2.zip \
+    && ./aws/install
+
+# Copy the lifecycle configuration JSON into the image
+COPY lifecycle.json /root/lifecycle.json
+
+# Set the entrypoint to use the AWS CLI
+ENTRYPOINT [ "aws" ]
