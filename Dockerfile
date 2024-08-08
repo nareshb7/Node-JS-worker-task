@@ -4,11 +4,14 @@ FROM node:14-alpine
 # Set the working directory
 WORKDIR /usr/src/app
 
+
 # Copy package.json and package-lock.json
 COPY package*.json ./
+RUN npm install -g typescript ts-node
 
 # Install dependencies
 RUN npm install
+RUN npm install express
 
 # Copy the rest of the application code
 COPY . .
@@ -17,5 +20,5 @@ COPY . .
 EXPOSE 3000
 
 # Command to run the application
-CMD ["ts-node-dev", "src/server.ts"]
+CMD ["npm", "start"]
 
