@@ -1,50 +1,24 @@
-version: '3'
+version: '3.8'
+
 services:
-  rabbitmq:
-    image: rabbitmq:3-management
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
-      - '5672:5672'
-      - '15672:15672'
-
-  parent:
-    build: .
-    command: ts-node-dev src/server.ts
+      - "3000:3000"
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
     environment:
-      - ROLE=parent
-      - FILE_COUNT=10
-      - FILE_SIZE=1
-      - S3_BUCKET=mast-dev-intw-test01
-    depends_on:
-      - rabbitmq
+      NODE_ENV: development
+    command: npm start
 
-  worker1:
-    build: .
-    command: ts-node-dev src/server.ts
+  rabbitmq:
+    image: "rabbitmq:3-management"
+    ports:
+      - "5672:5672"
+      - "15672:15672"
     environment:
-      - ROLE=worker
-    depends_on:
-      - rabbitmq
-
-  worker2:
-    build: .
-    command: ts-node-dev src/server.ts
-    environment:
-      - ROLE=worker
-    depends_on:
-      - rabbitmq
-
-  worker3:
-    build: .
-    command: ts-node-dev src/server.ts
-    environment:
-      - ROLE=worker
-    depends_on:
-      - rabbitmq
-
-  worker4:
-    build: .
-    command: ts-node-dev src/server.ts
-    environment:
-      - ROLE=worker
-    depends_on:
-      - rabbitmq
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
