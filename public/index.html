@@ -38,6 +38,7 @@
           const fileCount = document.getElementById("fileCount").value;
           const fileSize = document.getElementById("fileSize").value;
           const el = document.getElementById("show-log-data");
+          const s3Destination = document.getElementById("s3Destination").value
           if (el) {
             el.innerHTML = "";
             errorEl.innerHTML = "";
@@ -47,7 +48,7 @@
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ fileCount, fileSize }),
+            body: JSON.stringify({ fileCount, fileSize,s3Destination }),
           });
           const result = await response.json();
           console.log("result::", result);
@@ -72,6 +73,8 @@
       /><br /><br />
       <label for="fileSize">File Size (MB):</label>
       <input type="number" id="fileSize" name="fileSize" required /><br /><br />
+      <label for="s3Destination">S3 Destination:</label>
+      <input type="text" id="s3Destination" name="s3Destination" required><br><br>
       <button type="button" onclick="startTask()">Start Task</button>
       <button type="button" onclick="getUploadData()">Get data</button>
       <h5 id="error-message"></h5>

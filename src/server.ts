@@ -10,14 +10,16 @@ let logEntries: any[] = [];
 const BUCKET_NAME = process.env.S3_BUCKET_NAME || ""
 
 app.post('/start-task', async (req, res) => {
-    const { fileCount, fileSize, } = req.body;
-    console.log("DATA::::", { fileCount, fileSize })
+    const { fileCount, fileSize,s3Destination } = req.body;
+    console.log("DATA::::", { fileCount, fileSize,s3Destination })
     try {
-        const logEntry = await sendTask(fileCount, fileSize* 1024 * 1024, BUCKET_NAME);
+        const logEntry = await sendTask(fileCount, fileSize* 1024 * 1024, s3Destination);
         logEntries.push(logEntry);
         res.json({ message: 'Task started successfully', data: logEntries });
     } catch (error: any) {
-        res.status(500).json({ message: 'Error starting task', error: error.message });
+        const errorMessage = { message: 'Error starting task', error: error.message }
+        console.error(errorMessage)
+        res.status(500).json(errorMessage);
     }
 });
 
