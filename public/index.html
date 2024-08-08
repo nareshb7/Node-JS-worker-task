@@ -24,6 +24,10 @@
       async function startTask() {
           const fileCount = document.getElementById('fileCount').value;
           const fileSize = document.getElementById('fileSize').value;
+          const el = document.getElementById("show-log-data")
+              if (el) {
+                el.innerHTML = ""
+              }
 
           const response = await fetch('/start-task', {
               method: 'POST',
