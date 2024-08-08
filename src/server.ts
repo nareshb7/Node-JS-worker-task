@@ -7,12 +7,13 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, '../public')));
 
 let logEntries: any[] = [];
+const BUCKET_NAME = process.env.S3_BUCKET_NAME || ""
 
 app.post('/start-task', async (req, res) => {
     const { fileCount, fileSize, } = req.body;
     console.log("DATA::::", { fileCount, fileSize })
     try {
-        const logEntry = await sendTask(fileCount, fileSize* 1024 * 1024, "utrllererrr");
+        const logEntry = await sendTask(fileCount, fileSize* 1024 * 1024, BUCKET_NAME);
         logEntries.push(logEntry);
         res.json({ message: 'Task started successfully', data: logEntries });
     } catch (error: any) {
@@ -23,7 +24,6 @@ app.post('/start-task', async (req, res) => {
 app.get('/upload-data', (req, res) => {
     res.json(logEntries);
 });
-// sendTask(10, 5 * 1024 * 1024, 'utrllererrr').catch(console.error);
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);

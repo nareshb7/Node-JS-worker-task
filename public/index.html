@@ -6,40 +6,57 @@
     <title>Start Task</title>
     <script>
       async function getUploadData() {
-          const response = await fetch('/upload-data');
+        const errorEl = document.getElementById("error-message");
+        try {
+          if (errorEl) {
+            errorEl.innerHTML = "";
+          }
+          const response = await fetch("/upload-data");
           const result = await response.json();
-          console.log("RESULT:::", result)
-          const html = result[0].logData.map((file, i) => (`<div>
-              <h3>${i+1}. File Name: ${file?.fileName}</h3>
+          console.log("RESULT:::", result);
+          const html = result[0].logData.map(
+            (file, i) => `<div>
+              <h3>${i + 1}. File Name: ${file?.fileName}</h3>
               <p>File Size: ${file?.fileSize / 1024 / 1024} MB</p>
               <p>Rate of Copy: ${file?.rateOfCopy} MB/s</p>
               <p>Time to Copy: ${file?.timeToCopy} seconds</p>
-              </div>`))
-            
-              const el = document.getElementById("show-log-data")
-              if (el) {
-                el.innerHTML = html
-              }
+              </div>`
+          );
+          const el = document.getElementById("show-log-data");
+          if (el) {
+            el.innerHTML = html;
+          }
+        } catch (err) {
+          if (errorEl) {
+            errorEl.innerHTML = err.message;
+          }
+        }
       }
       async function startTask() {
-          const fileCount = document.getElementById('fileCount').value;
-          const fileSize = document.getElementById('fileSize').value;
-          const el = document.getElementById("show-log-data")
-              if (el) {
-                el.innerHTML = ""
-              }
-
-          const response = await fetch('/start-task', {
-              method: 'POST',
-              headers: {
-                  'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({ fileCount, fileSize }),
+        const errorEl = document.getElementById("error-message");
+        try {
+          const fileCount = document.getElementById("fileCount").value;
+          const fileSize = document.getElementById("fileSize").value;
+          const el = document.getElementById("show-log-data");
+          if (el) {
+            el.innerHTML = "";
+            errorEl.innerHTML = "";
+          }
+          const response = await fetch("/start-task", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ fileCount, fileSize }),
           });
-
           const result = await response.json();
-          console.log("result::", result)
+          console.log("result::", result);
           alert(result.message);
+        } catch (err) {
+          if (errorEl) {
+            errorEl.innerHTML = err.message;
+          }
+        }
       }
     </script>
   </head>
@@ -57,6 +74,7 @@
       <input type="number" id="fileSize" name="fileSize" required /><br /><br />
       <button type="button" onclick="startTask()">Start Task</button>
       <button type="button" onclick="getUploadData()">Get data</button>
+      <h5 id="error-message"></h5>
       <p id="show-log-data"></p>
     </form>
   </body>
