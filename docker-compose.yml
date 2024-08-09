@@ -21,14 +21,3 @@ services:
     environment:
       RABBITMQ_DEFAULT_USER: guest
       RABBITMQ_DEFAULT_PASS: guest
-
-    s3-lifecycle:
-    build:
-      context: .
-      dockerfile: Dockerfile.awscli
-    environment:
-      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
-      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
-      AWS_DEFAULT_REGION: ${AWS_DEFAULT_REGION}
-    command: s3api put-bucket-lifecycle-configuration --bucket your-bucket-name --lifecycle-configuration file:///root/lifecycle.json
-

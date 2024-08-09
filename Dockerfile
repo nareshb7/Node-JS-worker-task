@@ -10,7 +10,7 @@ COPY package*.json ./
 RUN npm install -g typescript ts-node
 
 # Install dependencies
-RUN npm install
+RUN npm install && npm install -g nodemon
 RUN npm install express
 
 # Copy the rest of the application code
