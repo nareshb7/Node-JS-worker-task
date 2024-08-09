@@ -11,11 +11,6 @@ const s3 = new S3Client({
     accessKeyId: KEY,
     secretAccessKey: SECRET_KEY,
   },
-  requestHandler: {
-    // Increase the timeout settings
-    connectionTimeout: 300000, // 5 minutes
-    socketTimeout: 300000, // 5 minutes
-  },
 });
 
 export async function uploadFileToS3(bucket: string, key: string, filePath: string): Promise<void> {
